@@ -7,8 +7,8 @@ import java.awt.Shape;
 public class circle extends shape
 {
 
-	public circle(int x, int y, int w, int h, Color c) {
-		super(x, y, w, h, c);
+	public circle(int x, int y, int w, Color c) {
+		super(x, y, w, w, c);
 	}
 
 	@Override
@@ -19,13 +19,19 @@ public class circle extends shape
 
 	@Override
 	public void draw(Graphics g) {
+		g.setColor(c);
 		g.fillOval(x, y, width, width);
 		
 	}
 
 	@Override
 	public boolean isOn(int x, int y) {
-		// TODO Auto-generated method stub
+		int cx = this.x + width/2;
+		int cy = this.y + width/2;
+		if (Math.sqrt(Math.pow(x - cx, 2) + Math.pow(y - cy, 2)) <= width/2)
+		{
+			return true;
+		}
 		return false;
 	}
 

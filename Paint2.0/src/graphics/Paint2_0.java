@@ -24,6 +24,7 @@ public class Paint2_0
 	private Image img;
 	boolean isrect = false;
 	boolean iscircle = false;
+	boolean isdelete = false;
 	ArrayList<shape> shapes = new ArrayList<shape>(); 
 
 	public Paint2_0()
@@ -69,9 +70,11 @@ public class Paint2_0
 		JButton rectangle = new JButton("Rectangle");
 		JButton line = new JButton("Line");
 		JButton circle = new JButton("Circle");
+		JButton delete = new JButton("Delete");
 		buttons.add(rectangle);
 		buttons.add(line);
 		buttons.add(circle);
+		buttons.add(delete);
 		
 		
 		//is button clicked and if yes - change varible rect to true
@@ -82,23 +85,34 @@ public class Paint2_0
 			{
 				isrect = true;
 				iscircle = false;
+				isdelete = false;
 			}
 		});
 		
 		//is button clicked and if yes - change varible circle to true
 		circle.addActionListener(new ActionListener()
 		{
-
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
 				iscircle = true;
 				isrect = false;
+				isdelete = false;
 			}
 			
 		});
 		
-		
-		
+		delete.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				isdelete = true;
+				isrect = false;
+				iscircle = false;
+			}	
+		});
+	
 		
 		drawarea.addMouseListener(new MouseListener()
 		{
@@ -109,36 +123,53 @@ public class Paint2_0
 						
 					}
 
-					public void mousePressed(MouseEvent e) 
-					{
+					@Override
+					public void mousePressed(MouseEvent e) {
 						if (isrect == true)
 						{
 							shapes.add(new rect(e.getX(), e.getY(), 40, 40, Color.black));
 						}
 						else if (iscircle == true)
 						{
-							
-							shapes.add(new circle(e.getX(), e.getY(), 40, 40, Color.blue));
+							shapes.add(new circle(e.getX(), e.getY(), 40, Color.blue));
+							System.out.println("yes");
 						}
+						else if (isdelete == true)
+						{
+							for (int i = 0; i < shapes.size(); i++)
+							{
+								if (shapes.get(i).isOn(e.getX(), e.getY()))
+								{
+									shapes.remove(i);
+									break;
+								}
+					
+							}
+						}
+						
 						frame.getContentPane().repaint();
 					}
 
-					public void mouseReleased(MouseEvent e) 
-					{
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
 						
 					}
 
-					public void mouseEntered(MouseEvent e) 
-					{
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// TODO Auto-generated method stub
 						
 					}
 
-					public void mouseExited(MouseEvent e) 
-					{
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
 						
 					}
 			
-		});		
+				});
+			
 		
 		frame.setSize(width, height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
