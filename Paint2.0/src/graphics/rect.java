@@ -25,18 +25,35 @@ public class rect extends shape{
 
 	@Override
 	public boolean isOn(int x, int y) {
-		if (x <= x + width && y <= y + height && x > this.x && y > this.y)
+		if (x <= this.x + width && y <= this.y + height && x > this.x && y > this.y)
 		{
 			return true;
 		}
 		return false;
 	}
 	
-
-	@Override
-	public void resize(int x1, int x2, int y1, int y2) {
-		// TODO Auto-generated method stub
+	public void resize (int x1, int y1, int x2, int y2) {
 		
+		//dragging to the left
+		if (x1 < x2)
+		{
+			x = x1;
+			width = x2 - x;
+		}
+		else if (x1 > x2)
+		{
+			width = x1 - x;		
+		}
+		
+		if (y1 < y2)
+		{
+			y = y1;
+			height = y2 - y;
+		}	
+		else if (y1 > y2)
+		{
+			height = y1 - y;
+		}
 	}
 
 }

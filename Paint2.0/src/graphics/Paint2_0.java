@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 
@@ -25,6 +26,8 @@ public class Paint2_0
 	boolean isrect = false;
 	boolean iscircle = false;
 	boolean isdelete = false;
+	int initialx;
+	int initialy;
 	ArrayList<shape> shapes = new ArrayList<shape>(); 
 
 	public Paint2_0()
@@ -53,7 +56,6 @@ public class Paint2_0
 		
 		
 		
-		//this is nooot working yet
 		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
 		panel.setLayout(boxlayout);
 		panel.setBorder(BorderFactory.createTitledBorder("Paint"));
@@ -127,12 +129,15 @@ public class Paint2_0
 					public void mousePressed(MouseEvent e) {
 						if (isrect == true)
 						{
-							shapes.add(new rect(e.getX(), e.getY(), 40, 40, Color.black));
+							shapes.add(new rect(e.getX(), e.getY(), 0, 0, Color.black));
+							initialx = e.getX();
+							initialy = e.getY();
 						}
 						else if (iscircle == true)
 						{
-							shapes.add(new circle(e.getX(), e.getY(), 40, Color.blue));
-							System.out.println("yes");
+							shapes.add(new circle(e.getX(), e.getY(), 0, Color.blue));
+							initialx = e.getX();
+							initialy = e.getY();
 						}
 						else if (isdelete == true)
 						{
@@ -158,7 +163,6 @@ public class Paint2_0
 
 					@Override
 					public void mouseEntered(MouseEvent e) {
-						// TODO Auto-generated method stub
 						
 					}
 
@@ -168,6 +172,24 @@ public class Paint2_0
 						
 					}
 			
+				});
+		
+		drawarea.addMouseMotionListener(new MouseMotionListener()
+				{
+
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						
+						shapes.get(shapes.size()-1).resize(e.getX(), e.getY(), initialx, initialy);
+						frame.getContentPane().repaint();
+					}
+
+					@Override
+					public void mouseMoved(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
 				});
 			
 		
