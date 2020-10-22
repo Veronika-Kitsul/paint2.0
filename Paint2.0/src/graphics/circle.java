@@ -20,7 +20,7 @@ public class circle extends shape
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(c);
-		g.fillOval(x, y, width, height);
+		g.fillOval(x - width/2, y - width/2, width, width);
 		
 	}
 
@@ -36,27 +36,19 @@ public class circle extends shape
 	}
 
 	@Override
+	//y2 and x2 are initial coordinates of the rectangle around the oval
 	public void resize(int x1, int x2, int y1, int y2) 
 	{
-		if (x1 < x2)
-		{
-			x = x1;
-			width = x2 - x;
-		}
-		else if (x1 > x2)
-		{
-			width = x1 - x;		
-		}
+		int dist = (int) Math.sqrt(Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2));
+		System.out.println(x1 + " " + x2);
 		
-		if (y1 < y2)
-		{
-			y = y1;
-			height = y2 - y1;
-		}	
-		else if (y1 > y2)
-		{
-			height = y1 - y2;
-		}
+			width = (int) (dist*2);
+		
+		
+		
+		
+		
+		
 	}
 
 }
