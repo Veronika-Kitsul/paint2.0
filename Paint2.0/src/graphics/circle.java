@@ -36,19 +36,17 @@ public class circle extends shape
 	}
 
 	@Override
-	//y2 and x2 are initial coordinates of the rectangle around the oval
-	public void resize(int x1, int x2, int y1, int y2) 
+	
+	//y2 and x2 are initial coordinates of the rectangle around the circle
+	public void resize(int x1, int y1, int x2, int y2) 
 	{
 		int dist = (int) Math.sqrt(Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2));
-		System.out.println(x1 + " " + x2);
 		
-			width = (int) (dist*2);
-		
-		
-		
-		
-		
-		
+			width = (int) (dist*2);	
 	}
 
 }
+
+
+
+

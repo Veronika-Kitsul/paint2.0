@@ -18,7 +18,7 @@ public class rect extends shape{
 
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(Color.black);
+		g.setColor(c);
 		g.fillRect(x, y, width, height);
 		
 	}

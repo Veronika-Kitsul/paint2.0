@@ -1,12 +1,15 @@
 package graphics;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.colorchooser.*;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
+import java.awt.Shape;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 import java.awt.event.ActionEvent;
@@ -22,20 +25,21 @@ public class Paint2_0
 {
 	
 	public final int width = 800, height = 800;
-	private Image img;
 	boolean isrect = false;
 	boolean iscircle = false;
 	boolean isdelete = false;
+	boolean isline = false;
+	boolean istext = false;
 	int initialx;
 	int initialy;
+	public JTextArea input;
+	Color onColor = Color.black;
 	ArrayList<shape> shapes = new ArrayList<shape>(); 
 
 	public Paint2_0()
 	{
-		//setting up new frame default options
+		//setting up new frame 
 		JFrame frame = new JFrame();
-			
-		
 			
 			
 		//creating panels for holding buttons, drawarea, and one overall panel
@@ -55,12 +59,12 @@ public class Paint2_0
 				};
 		
 		
-		
+		//laying out on y axe, setting title and borders
 		BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
 		panel.setLayout(boxlayout);
 		panel.setBorder(BorderFactory.createTitledBorder("Paint"));
 		
-		//adding panels to the frame
+		//adding panels to the frame, setting sizes
 		frame.add(panel);
 		panel.add(buttons);
 		panel.add(drawarea);
@@ -73,11 +77,33 @@ public class Paint2_0
 		JButton line = new JButton("Line");
 		JButton circle = new JButton("Circle");
 		JButton delete = new JButton("Delete");
+		JButton colorchooser = new JButton("Choose Color");
+		JButton text = new JButton("Text");
 		buttons.add(rectangle);
 		buttons.add(line);
 		buttons.add(circle);
 		buttons.add(delete);
+		buttons.add(colorchooser);
+		buttons.add(text);
 		
+		//input area for the text button;
+		input = new JTextArea(" ");
+		input.setEditable(true);
+		input.setPreferredSize(new Dimension(width/8, height/20));
+		buttons.add(input);
+		
+		//implementing action listener for color choosing button
+		
+//INITIAL COLOR DOES NOT WORK!!!!!!!!!!!!!!!!!!!!!!!!!1
+		colorchooser.addActionListener(new ActionListener()
+				{
+					@Override
+					public void actionPerformed(ActionEvent e) 
+					{
+						Color initialColor = Color.BLACK;
+						onColor = JColorChooser.showDialog(buttons, "Choose color", initialColor);
+					}
+				});
 		
 		//is button clicked and if yes - change varible rect to true
 		rectangle.addActionListener (new ActionListener()
@@ -88,6 +114,8 @@ public class Paint2_0
 				isrect = true;
 				iscircle = false;
 				isdelete = false;
+				isline = false;
+				istext = false;
 			}
 		});
 		
@@ -100,10 +128,13 @@ public class Paint2_0
 				iscircle = true;
 				isrect = false;
 				isdelete = false;
+				isline = false;
+				istext = false;
 			}
 			
 		});
 		
+		//if delete button pressed, set isdelete to true, and everything else to false
 		delete.addActionListener(new ActionListener()
 		{
 			@Override
@@ -112,9 +143,37 @@ public class Paint2_0
 				isdelete = true;
 				isrect = false;
 				iscircle = false;
+				isline = false;
+				istext = false;
 			}	
 		});
-	
+
+		//if line button is pressed, set isline to true, and everything else to false
+		line.addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				isline = true;
+				isdelete = false;
+				isrect = false;
+				iscircle = false;
+				istext = false;
+			}
+		});
+		
+		text.addActionListener(new ActionListener ()
+				{
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						isline = false;
+						isdelete = false;
+						isrect = false;
+						iscircle = false;
+						istext = true;
+					}
+				});
 		
 		drawarea.addMouseListener(new MouseListener()
 		{
@@ -124,20 +183,27 @@ public class Paint2_0
 					{
 						
 					}
+					
 
 					@Override
 					public void mousePressed(MouseEvent e) {
 						if (isrect == true)
 						{
-							shapes.add(new rect(e.getX(), e.getY(), 0, 0, Color.black));
+							shapes.add(new rect(e.getX(), e.getY(), 0, 0, onColor));
 							initialx = e.getX();
 							initialy = e.getY();
 						}
 						else if (iscircle == true)
 						{
-							shapes.add(new circle(e.getX(), e.getY(), 0, Color.blue));
+							shapes.add(new circle(e.getX(), e.getY(), 0, onColor));
 							initialx = e.getX();
 							initialy = e.getY();
+						}
+						else if (isline == true)
+						{
+							shapes.add(new line(e.getX(), e.getY(), e.getX(), e.getY(), onColor));
+							initialx = e.getX();
+							initialy = e.getY();	
 						}
 						else if (isdelete == true)
 						{
@@ -150,6 +216,13 @@ public class Paint2_0
 								}
 					
 							}
+						}
+						else if (istext == true)
+						{
+							/*if (input != "" && input != " ")
+							{
+								
+							}*/
 						}
 						
 						frame.getContentPane().repaint();
