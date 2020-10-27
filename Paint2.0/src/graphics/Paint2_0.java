@@ -23,15 +23,22 @@ import java.util.ArrayList;
 
 public class Paint2_0 
 {
-	
+	// variables for size of the window
 	public final int width = 800, height = 800;
+	
+	// booleans to hold which button is currently pressed
 	boolean isrect = false;
 	boolean iscircle = false;
 	boolean isdelete = false;
 	boolean isline = false;
 	boolean istext = false;
+	boolean isundo = false;
+	
+	// initial coordinates of the mouse for any shape
 	int initialx;
 	int initialy;
+	
+	
 	public JTextArea input;
 	Color onColor = Color.black;
 	ArrayList<shape> shapes = new ArrayList<shape>(); 
@@ -79,12 +86,14 @@ public class Paint2_0
 		JButton delete = new JButton("Delete");
 		JButton colorchooser = new JButton("Choose Color");
 		JButton text = new JButton("Text");
+		JButton undo = new JButton("Undo");
 		buttons.add(rectangle);
 		buttons.add(line);
 		buttons.add(circle);
 		buttons.add(delete);
 		buttons.add(colorchooser);
 		buttons.add(text);
+		buttons.add(undo);
 		
 		//input area for the text button;
 		input = new JTextArea(" ");
@@ -93,8 +102,6 @@ public class Paint2_0
 		buttons.add(input);
 		
 		//implementing action listener for color choosing button
-		
-//INITIAL COLOR DOES NOT WORK!!!!!!!!!!!!!!!!!!!!!!!!!1
 		colorchooser.addActionListener(new ActionListener()
 				{
 					@Override
@@ -116,6 +123,7 @@ public class Paint2_0
 				isdelete = false;
 				isline = false;
 				istext = false;
+				isundo = false;
 			}
 		});
 		
@@ -130,6 +138,7 @@ public class Paint2_0
 				isdelete = false;
 				isline = false;
 				istext = false;
+				isundo = false;
 			}
 			
 		});
@@ -145,6 +154,7 @@ public class Paint2_0
 				iscircle = false;
 				isline = false;
 				istext = false;
+				isundo = false;
 			}	
 		});
 
@@ -159,31 +169,51 @@ public class Paint2_0
 				isrect = false;
 				iscircle = false;
 				istext = false;
+				isundo = false;
 			}
 		});
 		
+		//if text button is pressed, then istext = true, and everything else = false
 		text.addActionListener(new ActionListener ()
-				{
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						isline = false;
-						isdelete = false;
-						isrect = false;
-						iscircle = false;
-						istext = true;
-					}
-				});
-		
-		drawarea.addMouseListener(new MouseListener()
 		{
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				isline = false;
+				isdelete = false;
+				isrect = false;
+				iscircle = false;
+				istext = true;
+				isundo = false;
+			}
+		});
+		
+		// if undo button is pressed, undo = true, everything else = false
+		undo.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				isundo = true;
+				isline = false;
+				isdelete = false;
+				isrect = false;
+				iscircle = false;
+				istext = false;
+				shapes.remove(shapes.size() - 1);
+				frame.getContentPane().repaint();
+			}
+			
+		});
+		
+		// Mouse listener for the drawarea to see things on the screen
+		drawarea.addMouseListener(new MouseListener()
+		{
 					@Override
 					public void mouseClicked(MouseEvent e) 
 					{
 						
-					}
-					
+					}	
 
 					@Override
 					public void mousePressed(MouseEvent e) {
