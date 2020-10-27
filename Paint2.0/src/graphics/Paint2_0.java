@@ -214,17 +214,15 @@ public class Paint2_0
 									shapes.remove(i);
 									break;
 								}
-					
 							}
 						}
 						else if (istext == true)
 						{
-							/*if (input != "" && input != " ")
+							if (input.getText() != "" && input.getText() != " ")
 							{
-								
-							}*/
+								shapes.add(new text(input.getText(), e.getX(), e.getY(), 40, 40, onColor));
+							}
 						}
-						
 						frame.getContentPane().repaint();
 					}
 

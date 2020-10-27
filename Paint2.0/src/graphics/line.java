@@ -33,9 +33,9 @@ public class line extends shape
 
 	@Override
 	public void resize(int x1, int y1, int x2, int y2) {
-		width = (int) Math.sqrt(Math.pow(x2-x1, 2)+ Math.pow(y2-y1, 2));
-		x = x1;
+		width = x1;
+		height = y1;
 		x = x2;
-	}
+		y = y2;	}
 
 }
