@@ -18,6 +18,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import javax.swing.JComponent;
 
 
 
@@ -40,6 +41,7 @@ public class Paint2_0
 	
 	
 	public JTextArea input;
+	public JTextArea fontsize;
 	Color onColor = Color.black;
 	ArrayList<shape> shapes = new ArrayList<shape>(); 
 
@@ -95,22 +97,30 @@ public class Paint2_0
 		buttons.add(text);
 		buttons.add(undo);
 		
+		
 		//input area for the text button;
 		input = new JTextArea(" ");
 		input.setEditable(true);
 		input.setPreferredSize(new Dimension(width/8, height/20));
 		buttons.add(input);
 		
+		fontsize = new JTextArea();
+		fontsize.setEditable(true);
+		fontsize.setPreferredSize(new Dimension(width/12, height/20));
+		buttons.add(fontsize);
+		
 		//implementing action listener for color choosing button
 		colorchooser.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e) 
 				{
-					@Override
-					public void actionPerformed(ActionEvent e) 
-					{
-						Color initialColor = Color.BLACK;
-						onColor = JColorChooser.showDialog(buttons, "Choose color", initialColor);
-					}
-				});
+					Color initialColor = Color.BLACK;
+					onColor = JColorChooser.showDialog(buttons, "Choose color", initialColor);
+				}
+			});
+		
+		
 		
 		//is button clicked and if yes - change varible rect to true
 		rectangle.addActionListener (new ActionListener()
@@ -202,8 +212,7 @@ public class Paint2_0
 				istext = false;
 				shapes.remove(shapes.size() - 1);
 				frame.getContentPane().repaint();
-			}
-			
+			}	
 		});
 		
 		// Mouse listener for the drawarea to see things on the screen
@@ -250,6 +259,7 @@ public class Paint2_0
 						{
 							if (input.getText() != "" && input.getText() != " ")
 							{
+								// change 40s to width and height of the text - but how
 								shapes.add(new text(input.getText(), e.getX(), e.getY(), 40, 40, onColor));
 							}
 						}
@@ -278,6 +288,7 @@ public class Paint2_0
 		drawarea.addMouseMotionListener(new MouseMotionListener()
 				{
 
+					// if mouse is dragged, resize the shape
 					@Override
 					public void mouseDragged(MouseEvent e) {
 						
@@ -294,6 +305,7 @@ public class Paint2_0
 				});
 			
 		
+		// setting up basic frame features
 		frame.setSize(width, height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);

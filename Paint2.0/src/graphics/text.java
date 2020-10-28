@@ -2,13 +2,10 @@ package graphics;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Shape;
-
 import javax.swing.JTextArea;
 
-public class text extends shape {
-	
-	
-	//passing input
+public class text extends shape 
+{
 	public text(String input, int x, int y, int w, int h, Color c) 
 	{
 		super(x, y, w, h, c);
@@ -19,11 +16,10 @@ public class text extends shape {
 		return null;
 	}
 
-	//how do i pass input here?
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(c);
-		//g.drawString(input, width, height);
+		g.drawString(type, width, height);
 		
 	}
 

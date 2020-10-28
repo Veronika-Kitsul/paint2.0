@@ -23,11 +23,12 @@ public class line extends shape
 		g.setColor(c);
 		g.drawLine(x, y, width, height);
 		
+		
 	}
 
 	@Override
 	public boolean isOn(int x, int y) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
