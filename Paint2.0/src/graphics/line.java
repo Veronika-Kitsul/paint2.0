@@ -11,32 +11,32 @@ public class line extends shape
 		super(x, y, w, h, c);
 	}
 	
-	@Override
-	public Shape copy() {
-		// TODO Auto-generated method stub
+	public Shape copy() 
+	{
 		return null;
 	}
 
-	@Override
-	public void draw(Graphics g) {
-		//should be two other values for the final
+	// draw a line
+	public void draw(Graphics g) 
+	{
 		g.setColor(c);
 		g.drawLine(x, y, width, height);
 		
 		
 	}
-
-	@Override
-	public boolean isOn(int x, int y) {
-		
+	
+	public boolean isOn(int x, int y) 
+	{	
 		return false;
 	}
 
-	@Override
-	public void resize(int x1, int y1, int x2, int y2) {
+	// resize the line
+	public void resize(int x1, int y1, int x2, int y2) 
+	{
 		width = x1;
 		height = y1;
 		x = x2;
-		y = y2;	}
+		y = y2;	
+	}
 
 }

@@ -5,7 +5,7 @@ import java.awt.Shape;
 
 public abstract class shape 
 {
-	
+
 	protected int x, y, width, height; 
 	protected Color c; 
 	protected String type; 

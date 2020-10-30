@@ -11,38 +11,33 @@ public class circle extends shape
 		super(x, y, w, w, c);
 	}
 
-	@Override
-	public Shape copy() {
-		// TODO Auto-generated method stub
+	public Shape copy() 
+	{
 		return null;
 	}
 
-	@Override
+	// draw circle starting from the center
 	public void draw(Graphics g) {
 		g.setColor(c);
 		g.fillOval(x - width/2, y - width/2, width, width);
 		
 	}
-
-	@Override
-	public boolean isOn(int x, int y) {
-		int cx = this.x + width/2;
-		int cy = this.y + width/2;
-		if (Math.sqrt(Math.pow(cx-x, 2) + Math.pow(cy-y, 2)) <= width/2)
+	
+	// check if the coordinates of the place where mouse is pressed are on the circle
+	public boolean isOn(int x, int y) 
+	{
+		if (Math.sqrt(Math.pow(this.x-x, 2) + Math.pow(this.y-y, 2)) <= width/2)
 		{
 			return true;
 		}
 		return false;
 	}
 
-	@Override
-	
-	//y2 and x2 are initial coordinates of the rectangle around the circle
+	// resize the circle when mouse is dragged
 	public void resize(int x1, int y1, int x2, int y2) 
 	{
 		int dist = (int) Math.sqrt(Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2));
-		
-			width = (int) (dist*2);	
+		width = (int) (dist*2);	
 	}
 
 }
